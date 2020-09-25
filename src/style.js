@@ -3,7 +3,7 @@ export default {
     boxSizing: 'border-box',
     fontFamily: 'sans-serif',
     position: 'fixed',
-    padding: 10,
+    padding: '10px',
     top: '0px',
     left: '0px',
     bottom: '0px',
@@ -13,7 +13,8 @@ export default {
     color: 'white',
     zIndex: 2147483647,
     textAlign: 'left',
-    fontSize: '16px',
+    fontSize: '16PX',
+    wordBreak: 'break-all',
     lineHeight: 1.2,
     overflow: 'auto'
   },

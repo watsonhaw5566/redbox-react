@@ -10,3 +10,6 @@ tmp
 
 dist
 lib
+
+.vscode
+yarn.lock

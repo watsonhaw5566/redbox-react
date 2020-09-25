@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-export interface RedBoxProps extends React.Props<RedBoxError> {
+export interface RedBoxProps {
   error: Error
 
   filename?: string

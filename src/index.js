@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
 import React, {Component} from 'react'
-import ReactDOM from 'react-dom'
 import style from './style.js'
 import ErrorStackParser from 'error-stack-parser'
 import assign from 'object-assign'
 import {isFilenameAbsolute, makeUrl, makeLinkText} from './lib'
 import { mapStackTrace } from 'sourcemapped-stacktrace'
+import { View, Text } from '@remax/one';
 
 export class RedBoxError extends Component {
   static propTypes = {
@@ -35,7 +35,7 @@ export class RedBoxError extends Component {
   }
 
   componentDidMount() {
-    if (!this.state.mapped)
+    if (!this.state.mapped && typeof window !== 'undefined')
       this.mapError(this.props.error)
   }
 
@@ -110,12 +110,12 @@ export class RedBoxError extends Component {
       }
 
       return (
-        <div style={frame} key={index}>
-          <div>{f.functionName}</div>
-          <div style={file}>
-            <a href={url} style={linkToFile}>{text}</a>
-          </div>
-        </div>
+        <View style={frame} key={index}>
+          <View>{f.functionName}</View>
+          <View style={file}>
+            <Text style={linkToFile}>{text}</Text>
+          </View>
+        </View>
       )
     })
   }
@@ -138,19 +138,19 @@ export class RedBoxError extends Component {
 
     if (parseError) {
       frames = (
-        <div style={frame} key={0}>
-          <div>{parseError.message}</div>
-        </div>
+        <View style={frame} key={0}>
+          <View>{parseError.message}</View>
+        </View>
       )
     } else {
       frames = this.renderFrames(frames)
     }
 
     return (
-      <div style={redbox} className={className}>
-        <div style={message}>{error.name}: {error.message}</div>
-        <div style={stack}>{frames}</div>
-      </div>
+      <View style={redbox} className={className}>
+        <View style={message}>{error.name}: {error.message}</View>
+        <View style={stack}>{frames}</View>
+      </View>
     )
   }
 }
@@ -162,23 +162,7 @@ export default class RedBox extends Component {
     error: PropTypes.instanceOf(Error).isRequired
   }
   static displayName = 'RedBox'
-  componentDidMount () {
-    this.el = document.createElement('div')
-    document.body.appendChild(this.el)
-    this.renderRedBoxError()
-  }
-  componentDidUpdate () {
-    this.renderRedBoxError()
-  }
-  componentWillUnmount () {
-    ReactDOM.unmountComponentAtNode(this.el)
-    document.body.removeChild(this.el)
-    this.el = null
-  }
-  renderRedBoxError () {
-    ReactDOM.render(<RedBoxError {...this.props}/>, this.el)
-  }
   render () {
-    return null
+    return <RedBoxError {...this.props} />;
   }
 }
