@@ -11,5 +11,6 @@ tmp
 dist
 lib
 
+.idea
 .vscode
 yarn.lock
